@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>集贤科技 AI 空调解决方案</title>
+  <meta name="description" content="集贤科技面向空调产品的 AIoT、语音交互、联网模组、APP/小程序与端云协同解决方案演示。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2315866f'/%3E%3Cpath d='M14 27h36v10H14z' fill='white'/%3E%3Cpath d='M20 42c7 6 17 6 24 0' fill='none' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #142322;
+      --muted: #526260;
+      --line: #d6e0dc;
+      --bg: #f6f8f5;
+      --paper: #ffffff;
+      --teal: #15866f;
+      --blue: #315f9d;
+      --gold: #b97921;
+      --red: #b94d3c;
+      --soft: #e9f3ef;
+      --shadow: 0 22px 80px rgba(20, 35, 34, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    .deck {
+      width: 100%;
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 70px clamp(22px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide:nth-child(even) { background: #f7faf8; }
+
+    .inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      color: #f8fffd;
+      background:
+        linear-gradient(90deg, rgba(11, 30, 30, .88) 0%, rgba(11, 30, 30, .72) 42%, rgba(11, 30, 30, .22) 72%, rgba(11, 30, 30, .10) 100%),
+        url("assets/smart-ac-system.png") center / cover no-repeat;
+    }
+
+    .hero .inner {
+      min-height: calc(100vh - 140px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 7vh;
+    }
+
+    .kicker {
+      margin: 0 0 18px;
+      color: var(--teal);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .hero .kicker { color: #8de1cb; }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 24px;
+      font-size: clamp(46px, 7vw, 92px);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 920px;
+      margin-bottom: 30px;
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 24px;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: #d8e8e4;
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.45;
+    }
+
+    .sublead {
+      max-width: 860px;
+      color: var(--muted);
+      font-size: clamp(18px, 1.55vw, 23px);
+      line-height: 1.58;
+    }
+
+    .meta {
+      margin-top: 44px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 6px 13px;
+      border: 1px solid rgba(255,255,255,.38);
+      color: #edf9f5;
+      background: rgba(255,255,255,.10);
+      font-size: 15px;
+      border-radius: 8px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .item {
+      min-height: 170px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.82);
+      border-radius: 8px;
+      box-shadow: 0 6px 22px rgba(20,35,34,.05);
+    }
+
+    .item p, .table p, li {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .num {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--gold);
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 22px;
+      align-items: start;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .bar:last-child { border-bottom: 1px solid var(--line); }
+
+    .bar strong {
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .bar p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .system {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .system img {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .pill {
+      padding: 18px 20px;
+      border-left: 5px solid var(--teal);
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 8px 28px rgba(20,35,34,.06);
+    }
+
+    .pill:nth-child(2) { border-color: var(--blue); }
+    .pill:nth-child(3) { border-color: var(--gold); }
+    .pill:nth-child(4) { border-color: var(--red); }
+
+    .pill strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 20px;
+    }
+
+    .pill span {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .table {
+      display: grid;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1.25fr;
+      min-height: 78px;
+      border-top: 1px solid var(--line);
+    }
+
+    .row:first-child {
+      border-top: none;
+      background: #eaf3ef;
+      font-weight: 800;
+    }
+
+    .cell {
+      padding: 18px;
+      border-left: 1px solid var(--line);
+      font-size: 17px;
+    }
+
+    .cell:first-child { border-left: none; }
+
+    .caption {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .step {
+      min-height: 138px;
+      padding: 20px;
+      color: #fff;
+      background: var(--ink);
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .step:nth-child(2) { background: var(--teal); }
+    .step:nth-child(3) { background: var(--blue); }
+    .step:nth-child(4) { background: var(--gold); }
+    .step:nth-child(5) { background: #5e6a68; }
+
+    .step b {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 15px;
+      opacity: .82;
+    }
+
+    .step span {
+      display: block;
+      font-size: 21px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .risk {
+      margin-top: 30px;
+      padding: 22px 24px;
+      color: #663326;
+      background: #fff3ec;
+      border: 1px solid #f0c4ad;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .nav {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 32px rgba(20,35,34,.14);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav button {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      z-index: 6;
+      background: transparent;
+    }
+
+    .progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: var(--teal);
+      transition: width .15s linear;
+    }
+
+    @media (max-width: 900px) {
+      .slide { padding: 54px 20px; }
+      .hero .inner { min-height: calc(100vh - 108px); }
+      .grid.two, .grid.three, .grid.four, .system, .flow { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+      .cell { border-left: none; border-top: 1px solid var(--line); }
+      .cell:first-child { border-top: none; }
+      .bar { grid-template-columns: 1fr; gap: 8px; }
+      .item { min-height: auto; padding: 22px; }
+      .step { min-height: auto; }
+      .nav { right: 12px; bottom: 12px; }
+    }
+
+    @media print {
+      .slide { min-height: 100vh; break-after: page; }
+      .nav, .progress { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+  <main class="deck">
+    <section class="slide hero" id="slide-1">
+      <div class="inner">
+        <p class="kicker">深圳市集贤科技有限公司</p>
+        <h1>AI 空调解决方案</h1>
+        <p class="lead">把空调从“可联网、可语音控制”升级为“理解场景、主动服务、持续运营”的智能家电入口。</p>
+        <div class="meta">
+          <span class="tag">WiFi / 蓝牙模组</span>
+          <span class="tag">离线语音 / 在线大模型</span>
+          <span class="tag">APP / 小程序 / 云平台</span>
+          <span class="tag">端云协同方案</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="inner">
+        <p class="kicker">为什么是 AI 空调</p>
+        <h2>空调智能化的竞争点，正在从“遥控替代”转向“体验闭环”。</h2>
+        <div class="grid three">
+          <div class="item">
+            <span class="num">01</span>
+            <h3>交互变化</h3>
+            <p>用户不只想打开空调，而是希望用自然语言表达“太闷了、睡觉模式、老人房别太冷”。</p>
+          </div>
+          <div class="item">
+            <span class="num">02</span>
+            <h3>场景变化</h3>
+            <p>空调需要和温湿度、人体存在、门窗、空气质量、用电策略等场景数据协同。</p>
+          </div>
+          <div class="item">
+            <span class="num">03</span>
+            <h3>运营变化</h3>
+            <p>品牌方需要通过 OTA、设备状态、售后诊断和用户运营提升复购与服务效率。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="inner system">
+        <div>
+          <p class="kicker">集贤科技可提供的能力组合</p>
+          <h2>围绕空调整机厂，提供从模组到应用的智能化落地方案。</h2>
+          <p class="sublead">方案可按客户产品定位拆分组合：基础联网、离线语音、离在线融合、APP/小程序、云端智能体和生产测试支持。具体硬件规格、认证、交期和商务条件需结合项目最终确认。</p>
+        </div>
+        <img src="assets/smart-ac-system.png" alt="AI空调端云协同示意图">
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="inner">
+        <p class="kicker">能力分层</p>
+        <h2>AI 空调不是单点功能，而是端、云、应用和生产协同。</h2>
+        <div class="stack">
+          <div class="pill"><strong>设备端</strong><span>WiFi / 蓝牙连接、空调主控协议适配、基础状态上报、OTA 与本地控制链路。</span></div>
+          <div class="pill"><strong>语音端</strong><span>离线唤醒与指令、本地控制、在线语义理解、多轮对话与 TTS 播放可按项目评估。</span></div>
+          <div class="pill"><strong>云平台</strong><span>设备接入、账号体系、远程控制、消息推送、场景联动、日志与基础诊断能力。</span></div>
+          <div class="pill"><strong>应用端</strong><span>品牌 APP、小程序、H5 控制页、售后工具和运营入口，支持按客户 UI/流程定制。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="inner">
+        <p class="kicker">典型功能方向</p>
+        <h2>优先做客户能感知、工厂能落地、售后能受益的功能。</h2>
+        <div class="grid four">
+          <div class="item"><h3>自然语言控空调</h3><p>支持温度、模式、风速、定时、睡眠等常用控制意图，复杂语义需按协议和语料评估。</p></div>
+          <div class="item"><h3>场景化舒适控制</h3><p>结合温湿度、时段、人群和房间状态，形成更自然的制冷、制热、除湿、睡眠体验。</p></div>
+          <div class="item"><h3>远程与家庭联动</h3><p>手机远程控制、家庭成员共享、自动化联动和平台生态对接可按客户渠道需求规划。</p></div>
+          <div class="item"><h3>售后与运营闭环</h3><p>设备状态、故障码、联网质量、升级记录和用户反馈可为售后定位与产品迭代提供依据。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="inner">
+        <p class="kicker">三档产品路线</p>
+        <h2>不同价位段不必一次做满，先按产品定位选择可控版本。</h2>
+        <div class="table">
+          <div class="row">
+            <div class="cell">版本</div>
+            <div class="cell">适合产品</div>
+            <div class="cell">建议能力</div>
+          </div>
+          <div class="row">
+            <div class="cell"><strong>基础联网版</strong></div>
+            <div class="cell">主打性价比、线上渠道、存量遥控升级</div>
+            <div class="cell">WiFi/蓝牙模组、APP/小程序控制、OTA、基础设备状态</div>
+          </div>
+          <div class="row">
+            <div class="cell"><strong>语音增强版</strong></div>
+            <div class="cell">卧室、老人房、儿童房、免手操作场景</div>
+            <div class="cell">离线语音常用指令、噪声环境适配、离在线融合能力评估</div>
+          </div>
+          <div class="row">
+            <div class="cell"><strong>AI 场景版</strong></div>
+            <div class="cell">中高端新品、平台生态款、品牌差异化产品</div>
+            <div class="cell">云端智能体、自然语言理解、场景推荐、售后诊断和运营数据闭环</div>
+          </div>
+        </div>
+        <p class="caption">注：以上为方案规划建议，不代表已承诺的硬件配置、量产周期或商务条件；具体需以项目评估和负责人最终确认为准。</p>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="inner">
+        <p class="kicker">项目落地流程</p>
+        <h2>建议以“小步验证、边界清晰、量产可控”的方式推进。</h2>
+        <div class="flow">
+          <div class="step"><b>Step 1</b><span>需求边界确认</span></div>
+          <div class="step"><b>Step 2</b><span>主控协议与硬件选型</span></div>
+          <div class="step"><b>Step 3</b><span>样机联调与语音语料验证</span></div>
+          <div class="step"><b>Step 4</b><span>认证、试产和产测方案</span></div>
+          <div class="step"><b>Step 5</b><span>量产、OTA 与售后闭环</span></div>
+        </div>
+        <div class="risk">关键风险：语音收音结构、空调主控协议、认证要求、云平台归属、APP 账号体系、交付节点和售后责任需要在立项阶段明确，避免后期返工。</div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="inner">
+        <p class="kicker">客户沟通建议</p>
+        <h2>第一次交流建议聚焦 6 个问题，快速判断项目可行性。</h2>
+        <div class="bar"><strong>产品定位</strong><p>是基础联网款、语音增强款，还是 AI 场景款？目标价位段和销售渠道是什么？</p></div>
+        <div class="bar"><strong>硬件现状</strong><p>空调主控协议、通讯接口、预留空间、麦克风结构、供电和认证要求是否已有资料？</p></div>
+        <div class="bar"><strong>应用归属</strong><p>使用客户自有 APP、小程序，还是接入第三方平台？账号体系和云平台归属如何确定？</p></div>
+        <div class="bar"><strong>量产计划</strong><p>样机、试产、认证和量产节点是否明确？商务报价、交期和责任边界需负责人最终确认。</p></div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="inner">
+        <p class="kicker">合作输出物</p>
+        <h2>对客户可交付的不只是模组，而是一套可推进的项目资料。</h2>
+        <div class="grid two">
+          <div class="item"><h3>方案资料</h3><p>功能清单、系统架构、产品版本建议、联调边界、风险事项和项目里程碑。</p></div>
+          <div class="item"><h3>工程资料</h3><p>模组规格、接口说明、协议对接、语音词条、OTA 方案和生产测试建议。</p></div>
+          <div class="item"><h3>应用资料</h3><p>APP/小程序控制流程、设备配网、家庭共享、售后入口和用户运营建议。</p></div>
+          <div class="item"><h3>商务资料</h3><p>报价、交期、付款、质保、合同责任等事项需负责人最终确认后对外输出。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="inner">
+        <p class="kicker">下一步</p>
+        <h2>建议先选择一个目标机型，做 2-3 周的需求澄清与样机验证计划。</h2>
+        <div class="grid three">
+          <div class="item"><span class="num">1</span><h3>拿资料</h3><p>主控协议、结构空间、目标 BOM、认证要求、APP/平台要求。</p></div>
+          <div class="item"><span class="num">2</span><h3>定版本</h3><p>确认基础联网、语音增强或 AI 场景版本，锁定第一阶段功能边界。</p></div>
+          <div class="item"><span class="num">3</span><h3>做验证</h3><p>完成模组选型、样机联调、语音效果、云端链路和量产风险评估。</p></div>
+        </div>
+        <p class="caption">深圳市集贤科技有限公司｜AIoT 智能软硬件、WiFi/蓝牙模组、语音模组、APP/小程序与端云协同方案。所有商务与重大交付承诺以最终确认文件为准。</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="nav" aria-label="演示控制">
+    <button type="button" id="prev" aria-label="上一页">‹</button>
+    <button type="button" id="next" aria-label="下一页">›</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.getElementById("progress");
+    const currentIndex = () => {
+      const mid = window.scrollY + window.innerHeight / 2;
+      let index = 0;
+      slides.forEach((slide, i) => {
+        if (slide.offsetTop <= mid) index = i;
+      });
+      return index;
+    };
+    const go = (delta) => {
+      const target = Math.max(0, Math.min(slides.length - 1, currentIndex() + delta));
+      slides[target].scrollIntoView({ behavior: "smooth" });
+    };
+    document.getElementById("prev").addEventListener("click", () => go(-1));
+    document.getElementById("next").addEventListener("click", () => go(1));
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        go(1);
+      }
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        go(-1);
+      }
+    });
+    const updateProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max <= 0 ? 100 : (window.scrollY / max) * 100;
+      progress.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+    };
+    document.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  </script>
+</body>
+</html>
